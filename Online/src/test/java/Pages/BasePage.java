@@ -21,7 +21,7 @@ public class BasePage
 	public void openBrowser(String Website) throws Throwable {
 		System.setProperty("webdriver.chrome.driver", "C:\\Stash\\Online\\src\\ChromeWebDriver\\chromedriver.exe");
 		ChromeOptions options = new ChromeOptions();
-		//options.addArguments("--incognito");
+		////options.addArguments("--incognito");
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		//capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 		capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);		
