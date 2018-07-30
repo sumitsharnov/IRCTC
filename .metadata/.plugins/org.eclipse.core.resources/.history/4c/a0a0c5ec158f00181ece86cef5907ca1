@@ -1,0 +1,13 @@
+package Constants;
+
+
+import Pages.BaseClass;
+
+public class Constants {
+
+	public void CreateBaseClassObject()
+	{
+		BaseClass bs = new BaseClass();
+	}
+	public static String loginIdLink = "loginText";
+}

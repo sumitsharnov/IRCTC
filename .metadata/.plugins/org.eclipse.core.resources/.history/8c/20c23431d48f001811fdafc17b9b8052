@@ -1,0 +1,66 @@
+package Pages;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class BasePage 
+{
+	public static WebDriver driver;
+
+	//Opening a browser
+	public void openBrowser(String Website) throws Throwable {
+		System.setProperty("webdriver.chrome.driver", "C:\\Stash\\Online\\src\\ChromeWebDriver\\chromedriver.exe");
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+
+		capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
+		capabilities.setCapability("chrome.switches", Arrays.asList("--incognito"));
+
+		driver = new ChromeDriver(capabilities);
+	  driver.manage().window().maximize();
+	driver.get(Website);
+	
+	String currentWindowUrl = driver.getCurrentUrl();	
+	if(currentWindowUrl.equals("https://www.irctc.co.in/nget/error"))
+	{
+		driver.findElement(By.xpath("//a[text() =  ' Click here to login']")).click();
+	}
+}
+
+	//Click on a link
+	public void clickOnElement(By elementLocation)
+	{
+		WebElement link = driver.findElement(elementLocation);
+		link.click();
+	}
+	
+	public void sendDataToTextField(By textFieldlocation, String textData)
+	{
+		WebElement textField = driver.findElement(textFieldlocation);
+		textField.sendKeys(textData);
+	}
+	public void waitForAnElement(By elementId)
+	{
+		try{
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		WebElement waitForElement = driver.findElement(elementId);
+		wait.until(ExpectedConditions.visibilityOf(waitForElement));
+		}catch(Exception ex)
+		{
+			System.out.println(ex);
+		}
+	}
+	
+	public void generalWait(int time)
+	{
+		driver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
+	}
+	
+}

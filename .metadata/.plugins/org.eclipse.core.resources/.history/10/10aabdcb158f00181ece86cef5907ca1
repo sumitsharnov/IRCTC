@@ -1,0 +1,10 @@
+package Constants;
+
+import java.sql.Driver;
+
+import Pages.BaseClass;
+
+public class Constants extends BaseClass {
+
+	static public By loginLink = dri
+}

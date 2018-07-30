@@ -1,0 +1,77 @@
+package Stepdefination;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+
+import Constants.Constants;
+import Pages.BasePage;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
+public class E2ETest extends BasePage {
+
+	public static Constants cons;
+	public static String t;
+	public static By loginLinkLocation= By.id(cons.loginLinkId); //Login link locator
+	public static By userNameLocation = By.id(cons.userNameId); //Login link locator
+	public static By passwordLocation = By.id(cons.PasswordId); //Login link locator
+	public static By captchaLocation = By.id(cons.captchaId); //Captcha image locator
+	public static By captchaInputLocation = By.id(cons.captchaInputId); //captcha input field locator
+	public static By signInButtonLocation = By.xpath(cons.signInButtonXpath); //Login button xpath
+	public static By requestOTPCheckboxLocation = By.id(cons.otpLoginID); //request OTP login checkbox id
+	public void ConstantsCreateObject()
+	{
+	cons = new Constants();
+	}
+	
+	@Given("^I am on the login page$")	
+	public void OpenBrowser() throws Throwable {
+		// TODO Auto-generated method stub
+		openBrowser("https://www.irctc.co.in/");		
+		clickOnElement(loginLinkLocation);
+	}
+
+	@Given("^I enter the username as 'Sumit'$")
+	public void i_enter_the_username_as_Sumit() throws Throwable {		
+		sendDataToTextField(userNameLocation, "shar22sumi");
+	}
+
+	@Given("^I enter the password as 'ghh'$")
+	public void i_enter_the_password_as_ghh() throws Throwable {
+		Thread.sleep(2000);
+		sendDataToTextField(passwordLocation, "Sumit@22");
+		Thread.sleep(4000);
+	}
+	
+	@Given("^I select the request otp option$")
+	public void i_select_the_request_otp_option() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    clickOnElement(requestOTPCheckboxLocation);
+	}
+
+	@When("^I enter the OTP manually$")
+	public void i_enter_the_otp_manually() throws Throwable {
+		Thread.sleep(2000);	
+		JavascriptExecutor js = (JavascriptExecutor) driver; 
+		try
+		{			
+		js.executeScript("document.getElementById('loginOTP').value = prompt('Please enter the OTP)");				
+		}
+		catch(org.openqa.selenium.UnhandledAlertException ex)
+		{
+		}
+	}
+	
+	@When("^I click on login button$")
+	public void i_click_on_login_button() throws Throwable {
+			
+		clickOnElement(signInButtonLocation);
+	}
+
+	@Then("^I logged in successfully$")
+	public void i_logged_in_successfully() throws Throwable {
+		System.out.println("Logged in");
+	}
+}

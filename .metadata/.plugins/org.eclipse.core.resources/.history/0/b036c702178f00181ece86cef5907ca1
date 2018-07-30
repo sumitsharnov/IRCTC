@@ -1,0 +1,9 @@
+package Constants;
+
+
+import Pages.BasePage;
+
+public class Constants extends BasePage {
+	
+	public static String loginIdLink = "loginText";
+}

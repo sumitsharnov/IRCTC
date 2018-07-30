@@ -1,0 +1,84 @@
+package Stepdefination;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeThat;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+
+import Constants.Constants;
+import Pages.BasePage;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
+public class E2ETest extends BasePage {
+
+	public static Constants cons;
+	public static String t;
+	public static By loginLinkLocation= By.id(cons.loginLinkId); //Login link locator
+	public static By userNameLocation = By.id(cons.userNameId); //Login link locator
+	public static By passwordLocation = By.id(cons.PasswordId); //Login link locator
+	public static By captchaLocation = By.id(cons.captchaId); //Captcha image locator
+	public static By captchaInputLocation = By.id(cons.captchaInputId); //captcha input field locator
+	public static By signInButtonLocation = By.xpath(cons.signInButtonXpath); //Login button xpath
+	public static By errorMessageLocation = By.xpath(cons.erorMessageXpath); 
+	public void ConstantsCreateObject()
+	{
+	cons = new Constants();
+	}
+	
+	@Given("^I am on the login page$")	
+	public void OpenBrowser() throws Throwable {
+		// TODO Auto-generated method stub
+		openBrowser("https://www.irctc.co.in/nget/train-search");		
+		clickOnElement(loginLinkLocation);
+	}
+
+	@Given("^I enter the username as 'Sumit'$")
+	public void i_enter_the_username_as_Sumit() throws Throwable {		
+		sendDataToTextField(userNameLocation, "shar22sumi");
+	}
+
+	@Given("^I enter the password as 'ghh'$")
+	public void i_enter_the_password_as_ghh() throws Throwable {
+		Thread.sleep(2000);
+		sendDataToTextField(passwordLocation, "Sumit@22");
+		Thread.sleep(4000);
+	}
+	@Given("^I do the needful required for successful login$")
+	public void i_do_the_needful_required_for_successful_login() throws Throwable {
+		JavascriptExecutor js = (JavascriptExecutor) driver; 
+		try
+		{			
+		js.executeScript("alert('Please do the needful required for succesful login')");	
+		Alert alert = driver.switchTo().alert();
+		
+		}
+		catch(org.openqa.selenium.UnhandledAlertException ex)
+		{
+		}
+	}	
+	
+	@When("^I click on login button$")
+	public void i_click_on_login_button() throws Throwable {
+		Thread.sleep(6000);		
+		clickOnElement(signInButtonLocation);
+		while(driver.findElement(errorMessageLocation).getText() != null)
+		{
+			i_do_the_needful_required_for_successful_login();
+			Alert alert = driver.switchTo().alert();
+			alert.dismiss();
+		}
+	}
+
+	@Then("^I logged in successfully$")
+	public void i_logged_in_successfully() throws Throwable {
+		By welcome = By.xpath("//*[contains(text(),'Welcome')]");		
+		waitForAnElement(welcome);
+		
+		assertTrue(driver.findElement(welcome).isDisplayed());
+	}
+}

@@ -1,0 +1,12 @@
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class BaseClass 
+{
+	static WebDriver driver;
+	public void i_am_on_the_login_page() throws Throwable {
+		System.setProperty("webdriver.chrome.driver", "C:\\Stash\\Online\\src\\ChromeWebDriver\\chromedriver.exe");
+	  driver = new ChromeDriver();
+	
+
+}
